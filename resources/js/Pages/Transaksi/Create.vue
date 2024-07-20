@@ -11,6 +11,7 @@ import ChangeBarangPopup from './Partials/ChangeBarangPopup.vue';
 import SelectedBarangTable from './Partials/SelectedBarangTable.vue';
 import { ref } from 'vue';
 import InputError from '@/Components/InputError.vue';
+import { useTransaksiStore } from '@/Stores/Transaksi';
 
 const props = defineProps({
     semuaCustomer: Array,
@@ -23,25 +24,10 @@ const selectBarangPopup = ref(false)
 const changeBarangPopup = ref(false)
 const ubahBarangIndex = ref(null)
 
-const input = ref({
-    no: 0,
-    tgl: '',
-    customer: null,
-    barang: [],
-    diskon: 0,
-    ongkir: 0,
-})
+const transaksi = useTransaksiStore()
 
-function submit(input) {
-    const payload = {
-        tgl: input.tgl,
-        customer_id: input.customer?.id,
-        barang: input.barang.map(v => ({ id: v.id, harga: v.harga, qty: v.qty, diskon: v.diskon })),
-        diskon: 10000,
-        ongkir: 13000,
-    }
-
-    router.post(route('transaksi.store'), payload)
+function submit() {
+    router.post(route('transaksi.store'), transaksi.requestPayload)
 }
 
 </script>
@@ -56,7 +42,7 @@ function submit(input) {
                 <div>
                     <div class="flex justify-between items-center">
                         <InputLabel value="Tanggal" />
-                        <TextInput type="date" v-model="input.tgl" />
+                        <TextInput type="date" v-model="transaksi.tgl" />
                     </div>
                     <InputError :message="errors.tgl" />
                 </div>
@@ -65,19 +51,19 @@ function submit(input) {
                     <SecondaryButton @click="selectCustomerPopup = true">Pilih Customer</SecondaryButton>
                     <InputError :message="errors.customer_id" />
                     <SelectCustomerPopup v-model="selectCustomerPopup" :semuaCustomer="semuaCustomer"
-                        @customerSelected="c => { input.customer = c; selectCustomerPopup = false }" />
-                    <div v-if="input.customer"class="w-full">
+                        @customerSelected="c => { transaksi.customer = c; selectCustomerPopup = false }" />
+                    <div v-if="transaksi.customerIsSelected"class="w-full">
                         <div class="flex justify-between items-center">
                             <InputLabel value="Kode" />
-                            <TextInput v-model="input.customer.kode" disabled />
+                            <TextInput v-model="transaksi.customer.kode" disabled />
                         </div>
                         <div class="flex justify-between items-center">
                             <InputLabel value="Nama" />
-                            <TextInput v-model="input.customer.nama" disabled />
+                            <TextInput v-model="transaksi.customer.nama" disabled />
                         </div>
                         <div class="flex justify-between items-center">
                             <InputLabel value="Telp" />
-                            <TextInput v-model="input.customer.telp" disabled />
+                            <TextInput v-model="transaksi.customer.telp" disabled />
                         </div>
                     </div>
                 </div>
@@ -86,20 +72,19 @@ function submit(input) {
                 <SelectBarangPopup
                     v-model="selectBarangPopup"
                     :semuaBarang="semuaBarang"
-                    @barangSelected="barang => { input.barang.push(barang); selectBarangPopup = false }" />
+                    @barangSelected="barang => { transaksi.pushBarang(barang); selectBarangPopup = false }" />
                 <ChangeBarangPopup
                     v-model="changeBarangPopup"
                     :semuaBarang="semuaBarang"
-                    @barangSelected="barang => { input.barang[ubahBarangIndex] = barang; changeBarangPopup = false }" />
+                    @barangSelected="barang => { transaksi.replaceBarang(ubahBarangIndex, barang); changeBarangPopup = false }" />
 
                 <InputError :message="errors.barang" />
                 <SelectedBarangTable
-                    v-model="input"
                     @tambahBarang="selectBarangPopup = true"
                     @ubahBarang="index => { changeBarangPopup = true; ubahBarangIndex = index }" />
             </div>
             <div class="flex justify-center gap-16 py-10">
-                <PrimaryButton type="submit" @click="submit(input)">Simpan</PrimaryButton>
+                <PrimaryButton type="submit" @click="submit">Simpan</PrimaryButton>
                 <SecondaryButton @click.prevent="router.get(route('transaksi.index'))">Batal</SecondaryButton>
             </div>
         </div>
