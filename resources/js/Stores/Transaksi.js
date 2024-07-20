@@ -28,6 +28,9 @@ export const useTransaksiStore = defineStore('transaksi', {
         subtotalBarang: function (state) {
             return (index) => this.hargaDiskonBarang(index) * state.barang[index].qty
         },
+        findByIdBarang: function (state) {
+            return (id) => state.barang.filter((item) => item.id == id)[0] ?? null
+        },
         subtotal: function (state) {
             let subtotal = 0
             for (let i = 0; i < state.barang.length; i++) {
@@ -44,26 +47,18 @@ export const useTransaksiStore = defineStore('transaksi', {
     },
 
     actions: {
-        setTanggal(tgl) {
-            this.tgl = tgl
-        },
-        setCustomer(customer) {
-            this.customer = customer
-        },
         pushBarang(barang) {
-            this.barang.push(barang)
+            const maybeBarang = this.findByIdBarang(barang.id)
+            if (!maybeBarang) {
+                this.barang.push(barang)
+                return
+            }
         },
         removeBarang(index) {
             this.barang.splice(index, 1)
         },
         replaceBarang(index, barang) {
             this.barang[index] = barang
-        },
-        setDiskon(diskon) {
-            this.diskon = diskon
-        },
-        setOngkir(ongkir) {
-            this.ongkir = ongkir
         },
     }
 })
