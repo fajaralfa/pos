@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, Head } from '@inertiajs/vue3';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
@@ -13,6 +13,8 @@ defineProps({
     errors: Object,
 })
 
+const title = "Daftar Barang"
+
 function confirmDelete(id) {
     if (confirm('Hapus data ini?')) {
         router.delete(route('barang.destroy', id))
@@ -21,9 +23,11 @@ function confirmDelete(id) {
 </script>
 
 <template>
+    <Head :title />
+
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Daftar Barang</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ title }}</h2>
         </template>
         <InputError :message="errors.barang" />
         <Link :href="route('barang.create')" as="button" class="px-10 py-5">

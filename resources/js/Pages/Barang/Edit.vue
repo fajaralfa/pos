@@ -3,20 +3,24 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { useForm } from '@inertiajs/vue3'
+import { useForm, Head } from '@inertiajs/vue3'
 
 const props = defineProps({
     barang: Object,
 })
+
+const title = "Edit Barang"
 
 const form = useForm(props.barang)
 
 </script>
 
 <template>
+    <Head :title />
+    
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Barang</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ title }}</h2>
         </template>
         <div class="flex justify-center p-10">
             <form @submit.prevent="form.put(route('barang.update', barang.id))" class="w-[30rem] space-y-5">

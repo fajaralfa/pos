@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { router } from '@inertiajs/vue3'
+import { router, Head } from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SelectCustomerPopup from './Partials/SelectCustomerPopup.vue';
 import SelectBarangPopup from './Partials/SelectBarangPopup.vue';
@@ -19,6 +19,8 @@ const props = defineProps({
     errors: Object,
 })
 
+const title = "Transaksi Baru"
+
 const selectCustomerPopup = ref(false)
 const selectBarangPopup = ref(false)
 const changeBarangPopup = ref(false)
@@ -33,9 +35,11 @@ function submit() {
 </script>
 
 <template>
+    <Head :title />
+
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Transaksi Baru</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ title }}</h2>
         </template>
         <div id="form" class="px-16 py-5 space-y-10">
             <div class="w-96 space-y-5">

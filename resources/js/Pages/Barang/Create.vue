@@ -4,7 +4,9 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Link, useForm } from '@inertiajs/vue3'
+import { Link, useForm, Head } from '@inertiajs/vue3'
+
+const title = "+ Barang Baru"
 
 const form = useForm({
     kode: '',
@@ -15,9 +17,11 @@ const form = useForm({
 </script>
 
 <template>
+    <Head :title />
+
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Buat Barang Baru</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ title }}</h2>
         </template>
         <div class="flex justify-center p-10">
             <form @submit.prevent="form.post(route('barang.store'))" class="w-[30rem] space-y-5">
