@@ -41,8 +41,8 @@ function submit() {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ title }}</h2>
         </template>
-        <div id="form" class="px-16 py-5 space-y-10">
-            <div class="w-96 space-y-5">
+        <div id="form" class="px-2 md:px-16 py-5 space-y-10">
+            <div class="md:w-96 space-y-5">
                 <div>
                     <div class="flex justify-between items-center">
                         <InputLabel value="Tanggal" />

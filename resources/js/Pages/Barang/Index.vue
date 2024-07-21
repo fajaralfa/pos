@@ -33,7 +33,7 @@ function confirmDelete(id) {
         <Link :href="route('barang.create')" as="button" class="px-10 py-5">
         <PrimaryButton>Tambah Barang</PrimaryButton>
         </Link>
-        <div class="flex justify-center">
+        <div class="flex justify-center text-sm md:text-base">
             <table class="border-collapse table-fixed">
                 <thead>
                     <tr>
@@ -47,11 +47,9 @@ function confirmDelete(id) {
                         <td>{{ item.kode }}</td>
                         <td>{{ item.nama }}</td>
                         <td>{{ item.harga }}</td>
-                        <td>
-                            <Link :href="route('barang.edit', item.id)">
-                            <SecondaryButton>^</SecondaryButton>
-                            </Link>
-                            <DangerButton @click="confirmDelete(item.id)">x</DangerButton>
+                        <td class="flex !p-0 w-12">
+                            <Link :href="route('barang.edit', item.id)" as="button" class="bg-slate-300 flex-1">^</Link>
+                            <button @click="confirmDelete(item.id)" class="bg-red-500 text-white flex-1">x</button>
                         </td>
                     </tr>
                 </tbody>

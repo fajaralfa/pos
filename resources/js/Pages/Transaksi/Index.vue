@@ -28,7 +28,7 @@ const search = ref({
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ title }}</h2>
         </template>
 
-        <div class="w-full flex px-10 py-5 justify-between">
+        <div class="w-full px-3 md:px-10 py-5 md:flex justify-between space-y-4">
             <Link :href="route('transaksi.create')" as="button">
             <PrimaryButton>Transaksi Baru</PrimaryButton>
             </Link>

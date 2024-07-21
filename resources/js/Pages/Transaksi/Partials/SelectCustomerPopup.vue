@@ -54,7 +54,7 @@ const showBuatCustomerBaru = ref(false)
 
 <template>
     <Popup v-if="showPopupModel">
-        <div class="relative bg-white p-10 space-y-5 h-full overflow-y-scroll">
+        <div class="relative bg-white p-2 md:p-10 space-y-5 h-full overflow-y-scroll">
             <button @click="showPopupModel = false"
                 class="absolute top-0 right-0 px-2 py-1 bg-red-500 text-white font-bold">Close</button>
 
@@ -95,27 +95,29 @@ const showBuatCustomerBaru = ref(false)
                 </div>
             </form>
             <TextInput v-model="queryNama" name="nama" placeholder="Cari Nama Customer" />
-            <table>
-                <thead>
-                    <tr>
-                        <th>Kode</th>
-                        <th>Nama</th>
-                        <th>Telp</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="customer in filteredCustomer" :key="customer.id">
-                        <td>{{ customer.kode }}</td>
-                        <td>{{ customer.nama }}</td>
-                        <td>{{ customer.telp }}</td>
-                        <td>
-                            <PrimaryButton @click.prevent="() => $emit('customerSelected', customer)">Pilih
-                            </PrimaryButton>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="overflow-x-auto text-sm md:text-base">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Telp</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="customer in filteredCustomer" :key="customer.id">
+                            <td>{{ customer.kode }}</td>
+                            <td>{{ customer.nama }}</td>
+                            <td>{{ customer.telp }}</td>
+                            <td>
+                                <PrimaryButton @click.prevent="() => $emit('customerSelected', customer)">Pilih
+                                </PrimaryButton>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </Popup>
 </template>

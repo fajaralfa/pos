@@ -8,8 +8,8 @@ let count = 1
 </script>
 
 <template>
-    <div class="px-10">
-        <table class="w-full">
+    <div class="px-2 md:px-10 overflow-auto text-sm md:text-base">
+        <table class="md:w-full table-fixed">
             <thead>
                 <tr>
                     <th>No</th>
