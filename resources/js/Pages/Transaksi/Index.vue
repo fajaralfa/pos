@@ -12,8 +12,8 @@ const props = defineProps({
     grandTotal: Object,
 })
 
-const formQuery = ref({
-    q: ''
+const search = ref({
+    nama: ''
 })
 
 </script>
@@ -28,8 +28,8 @@ const formQuery = ref({
             <Link :href="route('transaksi.create')" as="button">
             <PrimaryButton>Transaksi Baru</PrimaryButton>
             </Link>
-            <form @submit.prevent="router.get(route('transaksi.index'), formQuery)" class="flex items-stretch">
-                <TextInput v-model="formQuery.q" placeholder="Nama Pembeli" />
+            <form @submit.prevent="router.get(route('transaksi.index'), search)" class="flex items-stretch">
+                <TextInput v-model="search.nama" placeholder="Nama Pembeli" />
                 <SecondaryButton type="submit">Cari</SecondaryButton>
             </form>
         </div>

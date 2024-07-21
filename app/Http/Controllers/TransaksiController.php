@@ -16,9 +16,9 @@ class TransaksiController extends Controller
     public function index(Request $request)
     {
         $transaksiList = [];
-        if ($request->query('q')) {
+        if ($request->nama) {
             $transaksiList = Sales::rightJoin('customers', 'sales.customer_id', '=', 'customers.id')
-                ->where('customers.nama', 'like', "%$request->q%")
+                ->where('customers.nama', 'like', "%$request->nama%")
                 ->get([
                 'sales.kode', 'sales.tgl', 'customers.nama as namaCustomer', 'sales.jumlah_barang', 'sales.subtotal', 'sales.diskon', 'sales.ongkir', 'sales.total_bayar'
                 ]);
